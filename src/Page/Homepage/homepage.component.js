@@ -8,7 +8,7 @@ import Directory from '..//../Component/Directory/Directory.component';
     <div className='homepage'>
         <Directory/>
     </div>
-)
+);
 
 
 export default HomePage;
