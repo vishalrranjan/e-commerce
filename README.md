@@ -41,7 +41,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To learn React, check out the  [React documentation](https://reactjs.org/).
 
 ### Code Splitting
 
@@ -66,3 +66,16 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Some Concept of React
+
+STATE Vs PROPS
+>> Need 
+
+>>PROPS
+if data is managed by one component but another component needs access to that data, you'd pass that data from the one component to the other component via PROPS.
+
+>> STATE 
+If a component manages the data `itself`, it should use `state` and `setState` to manage it.
+
+

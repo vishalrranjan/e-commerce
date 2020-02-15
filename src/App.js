@@ -2,55 +2,58 @@ import React from 'react';
 
 import HomePage from './Page/Homepage/homepage.component';
 
-import './App.css';
-
 import {Route, Switch } from 'react-router-dom';
 
-const HatsPage = () =>(
-  <div>
-    <h1>HatsPage </h1>
-  </div>
-);
+import ShopPage from './Page/Shop/Shop.component';
 
-const Jackets = () =>(
-  <div>
-    <h1>Jackets </h1>
-  </div>
-);
+import './App.css';
 
-const Sneakers = () =>(
-    <div>
-      <h1>Sneakers </h1>
-    </div>
-);
+import Header from './Component/Header/Header.component';
 
-const Womens = () =>(
-  <div>
-    <h1>Womens </h1>
-  </div>
-);
+import SignInAndSignUpPage from './Page/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
-const Mens = () =>(
-  <div>
-    <h1>Mens </h1>
-  </div>
-);
+import {auth} from './firebase/firebase.utils';
 
+class App extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      currentUser : null
+    }
+  }
+  unsubscribeFromAuth = null;
 
-function App() {
-  return (
-    <div>
-      <Switch>
-        {/*path is used for url and exact is working like target(by default exact is true.) */} 
-        <Route exact path='/' component={ HomePage } /> 
-        <Route exact path='/hats' component={ HatsPage } /> 
-        <Route exact path='/jackets' component={ Jackets } /> 
-        <Route exact path='/sneakers' component={ Sneakers } /> 
-        <Route exact path='/womens' component={ Womens } /> 
-        <Route exact path='/mens' component={ Mens } /> 
-      </Switch>
-    </div>
-  );
+  componentDidMount(){
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user=> {
+      this.setState({ currentUser: user });
+      console.log(user);
+    })
+  }
+  
+  componentWillUnmount(){
+    this.unsubscribeFromAuth();
+  }
+
+  render(){
+    return (
+      <div>
+        <Header currentUser={this.state.currentUser} />
+        <Switch>
+          {/*path is used for url and exact is working like target(by default exact is true. ) 
+          <Route exact path='/hats' component={ Hats } /> 
+          <Route exact path='/jackets' component={ Jackets } /> 
+          <Route exact path='/sneakers' component={ Sneakers } /> 
+          <Route exact path='/womens' component={ Womens } /> 
+          <Route exact path='/mens' component={ Mens } /> 
+         */} 
+
+          <Route exact path='/' component={ HomePage } /> 
+          <Route path='/shop' component={ ShopPage } />
+          <Route path='/signin' component={ SignInAndSignUpPage } />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
