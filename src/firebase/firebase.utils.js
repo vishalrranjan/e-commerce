@@ -13,13 +13,37 @@ const config = {
     measurementId: "G-CZENEV2XNT"
   };
 // storing user in firestore databse 
-const createUserProfileDocument = async (userAuth,additionalData) => {
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if(!userAuth ) return;
 
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  const snapShot = await userRef.get();
+
+  if(!snapShot.exists){
+    const { displayName, eamil } = userAuth;
+    const createdAt = new Date().toLocaleString();
+
+    try {
+      await userRef.set(
+        displayName,
+        eamil,
+        createdAt,
+        ...additionalData
+      )
+    } catch (error) {
+      console.log('error creating user', error.message );
+    }
+  }
+  // const userRef = firestore.doc('users/145dfsda8dfa8');
+  // const snapShot = userRef.get()
+  // console.log(userAuth.displayName);
+  return userRef;
 }
 
 firebase.initializeApp(config);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
  //google authentication
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({promt: 'select_account'});
